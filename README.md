@@ -4,3 +4,11 @@ This repository is created to explore transfer learning strategies by training a
 ## Datasets:
 1. [Stanford Dogs Dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/)
 2. [Cat Breeds Dataset](https://www.kaggle.com/ma7555/cat-breeds-dataset#cats.csv)
+
+### Note:
+This work is done as the final project for CS1430 Computer Vision class.
+
+### Team Members:
+- Albert Webson (albert_webson@brown.edu)
+- Nihal Vivekanand Nayak (nihal_vivekanand_nayak@brown.edu)
+- Marina Neseem (marina_neseem@brown.edu)
