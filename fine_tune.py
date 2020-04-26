@@ -41,7 +41,8 @@ def main(model_name):
     # load the dataset
     print('loading cats dataset')
     dataloaders_dict = get_dataloaders(DATASET_DIR, TRAIN_CLASSES)
-
+    loss = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=1e-03)
     print('fine-tuning the model')
     model, val_loss = train(model, dataloaders_dict, loss, optimizer, device, no_of_epochs=20)
 
@@ -63,4 +64,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     # fine-tune model
-    main(args.pretrained-model)
+    main(args.pretrained_model)
