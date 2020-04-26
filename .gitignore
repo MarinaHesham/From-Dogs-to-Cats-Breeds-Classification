@@ -139,3 +139,7 @@ cython_debug/
 
 data/
 .vscode
+
+dogs
+cats
+*.zip
