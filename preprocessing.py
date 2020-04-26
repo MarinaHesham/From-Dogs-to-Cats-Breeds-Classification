@@ -10,7 +10,7 @@
 
 import kaggle
 import os
-import cv2
+# import cv2
 import numpy as np 
 from zipfile import ZipFile
 
@@ -46,7 +46,7 @@ def get_data(dataset_name='dogs', number_of_breeds=5, download=True):
 
         with ZipFile(zip_filename, 'r') as zipObj:
             zipObj.extractall(destination_dir)
-
+    return 
     images = []
     labels = []
 

@@ -26,7 +26,7 @@ def main():
     
     # load the resnet50 model
     print('loading the resnet model')
-    model = models.resnet50()
+    model = models.resnet18()
     num_feat = model.fc.in_features
     model.fc = nn.Linear(num_feat, len(TRAIN_CLASSES))
 

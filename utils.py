@@ -1,3 +1,4 @@
+import copy
 import os
 import torch
 import torch.nn as nn
@@ -68,7 +69,7 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
         
             total_loss += loss.item()
             correct += torch.sum(preds == labels.data)
-            print('breaking')
+            # print('breaking')
             break
         
         epoch_loss = total_loss / len(dataloaders_dict[phase].dataset)
@@ -80,6 +81,7 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
         if phase == 'val':
             if not val_loss:
                 # save model 
+                print("save model")
                 best_model = copy.deepcopy(model.state_dict())
             else:
                 min_loss = min(val_loss)
@@ -88,6 +90,6 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
 
             val_loss.append(epoch_loss)
     
-        model.load_state_dict(best_model)
+    model.load_state_dict(best_model)
 
-        return model, val_loss
+    return model, val_loss
