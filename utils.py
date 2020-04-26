@@ -1,6 +1,7 @@
 import os
 import torch
 import torch.nn as nn
+from dataset import load_images, ImageFolder, transform_image
 
 
 def save_model(model, model_path):
@@ -8,13 +9,13 @@ def save_model(model, model_path):
 
 
 def get_dataloaders(dir_path, train_classes, batch_size=128):
-    dog_image_label = load_images(dir_path, train_classes)
+    image_label = load_images(dir_path, train_classes)
 
     # split the dataset into train, validation and test
-    num_images = len(dog_image_label)
+    num_images = len(image_label)
     train_split, val_split = int(num_images * 0.8), int(num_images * 0.9)
     # TODO: shuffle the images
-    train, val, test = dog_image_label[:train_split], dog_image_label[train_split:val_split], dog_image_label[val_split:]
+    train, val, test = image_label[:train_split], image_label[train_split:val_split], image_label[val_split:]
     
     # make them into pytorch datasets
     train_dataset = ImageFolder(train, transform_image('train'))
@@ -23,7 +24,7 @@ def get_dataloaders(dir_path, train_classes, batch_size=128):
 
     dataloaders_dict = {
         "train": torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=1),
-        "val": torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=False, num_workers=1)
+        "val": torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=False, num_workers=1),
         "test": torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=1)
     }
 
@@ -58,7 +59,7 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
                 outputs = model(images)
                 loss = loss_fn(outputs, labels)
 
-                _, preds = toech.max(outputs, 1)
+                _, preds = torch.max(outputs, 1)
 
                 if phase == 'train':
                     optimizer.zero_grad()
@@ -67,9 +68,11 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
         
             total_loss += loss.item()
             correct += torch.sum(preds == labels.data)
+            print('breaking')
+            break
         
-        epoch_loss = total_loss / len(dataloaders[phase].dataset)
-        epoch_acc = correct.double() / len(dataloaders[phase].dataset)
+        epoch_loss = total_loss / len(dataloaders_dict[phase].dataset)
+        epoch_acc = correct.double() / len(dataloaders_dict[phase].dataset)
          
         print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
