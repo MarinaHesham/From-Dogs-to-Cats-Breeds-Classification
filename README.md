@@ -19,10 +19,19 @@ python download_datasets.py
 ```
 
 ## Training Dogs Model
+Train the dogs model
 
+```
+python train.py
+```
 
 ## Fine-Tuning on Cats Dataset
+Fine-tune the pretrained model on the cats dataset
 
+```
+python fine_tune.py --pretrained-model dogs
+```
+We have two options for pretrained model `dogs` and `imagenet`. 
 
 
 ### Note:
