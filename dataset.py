@@ -57,6 +57,6 @@ def load_images(data_dir, classes):
         _path = os.path.join(data_dir, _class)
         images = os.listdir(_path)
         for image in images:
-            all_data.append((image, i))
+            all_data.append((os.path.join(_path, image), i))
     
     return all_data
