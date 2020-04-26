@@ -5,6 +5,26 @@ This repository is created to explore transfer learning strategies by training a
 1. [Stanford Dogs Dataset](https://www.kaggle.com/jessicali9530/stanford-dogs-dataset)
 2. [Cat Breeds Dataset](https://www.kaggle.com/ma7555/cat-breeds-dataset#cats.csv)
 
+## Requirements
+Install pytorch and [kaggle api token](https://www.kaggle.com/docs/api). Place `kaggle.json` in `~/.kaggle` directory. 
+
+## Download Datasets
+In our experiments, we use these two datasets: 
+1. [Stanford Dogs Dataset](https://www.kaggle.com/jessicali9530/stanford-dogs-dataset)
+2. [Cat Breeds Dataset](https://www.kaggle.com/ma7555/cat-breeds-dataset#cats.csv)
+
+To download these datasets, execute this command
+```
+python download_datasets.py
+```
+
+## Training Dogs Model
+
+
+## Fine-Tuning on Cats Dataset
+
+
+
 ### Note:
 This work is done as the final project for CS1430 Computer Vision class.
 
