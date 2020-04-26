@@ -42,54 +42,54 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
     model.to(device)
     val_loss = []
     best_model = None
-    for phase in ['train', 'val', 'test']:
-        if phase == 'train':
-            model.train()
-        else:
-            model.eval()
-
-        # 
-        total_loss = 0.
-        correct = 0
-        for batch in dataloaders_dict[phase]:
-            images, labels = batch
-            images = images.to(device)
-            labels = labels.to(device)
-
-            with torch.set_grad_enabled(phase == 'train'):
-                outputs = model(images)
-                loss = loss_fn(outputs, labels)
-
-                _, preds = torch.max(outputs, 1)
-
-                if phase == 'train':
-                    optimizer.zero_grad()
-                    loss.backward()
-                    optimizer.step()
-        
-            total_loss += loss.item()
-            correct += torch.sum(preds == labels.data)
-            # print('breaking')
-            break
-        
-        epoch_loss = total_loss / len(dataloaders_dict[phase].dataset)
-        epoch_acc = correct.double() / len(dataloaders_dict[phase].dataset)
-         
-        print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
-
-        # check if the validation loss is the best 
-        if phase == 'val':
-            if not val_loss:
-                # save model 
-                print("save model")
-                best_model = copy.deepcopy(model.state_dict())
+    for epoch in range(no_of_epochs):
+        print(f'Epochs: {epoch + 1}')
+        for phase in ['train', 'val', 'test']:
+            if phase == 'train':
+                model.train()
             else:
-                min_loss = min(val_loss)
-                if epoch_loss < min_loss:
-                    best_model = copy.deepcopy(model.state_dict())
+                model.eval()
 
-            val_loss.append(epoch_loss)
-    
+            # 
+            total_loss = 0.
+            correct = 0
+            for batch in dataloaders_dict[phase]:
+                images, labels = batch
+                images = images.to(device)
+                labels = labels.to(device)
+
+                with torch.set_grad_enabled(phase == 'train'):
+                    outputs = model(images)
+                    loss = loss_fn(outputs, labels)
+
+                    _, preds = torch.max(outputs, 1)
+
+                    if phase == 'train':
+                        optimizer.zero_grad()
+                        loss.backward()
+                        optimizer.step()
+            
+                total_loss += loss.item()
+                correct += torch.sum(preds == labels.data)
+            
+            epoch_loss = total_loss / len(dataloaders_dict[phase].dataset)
+            epoch_acc = correct.double() / len(dataloaders_dict[phase].dataset)
+            
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+
+            # check if the validation loss is the best 
+            if phase == 'val':
+                if not val_loss:
+                    # save model 
+                    print("save model")
+                    best_model = copy.deepcopy(model.state_dict())
+                else:
+                    min_loss = min(val_loss)
+                    if epoch_loss < min_loss:
+                        best_model = copy.deepcopy(model.state_dict())
+
+                val_loss.append(epoch_loss)
+        
     model.load_state_dict(best_model)
 
     return model, val_loss
