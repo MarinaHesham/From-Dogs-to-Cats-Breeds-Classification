@@ -2,7 +2,9 @@
 This repository is created to explore transfer learning strategies by training a model to classify images of dogs and then fine tune it to classify a dataset of cats breeds.
 
 ## Requirements
-Install pytorch and [kaggle api token](https://www.kaggle.com/docs/api). Place `kaggle.json` in `~/.kaggle` directory. 
+- Install pytorch `pip3 install torch torchvision`
+- Get a [kaggle api token](https://www.kaggle.com/docs/api): My Account --> scroll down to Create New API token.
+- Place `kaggle.json` in `~/.kaggle` directory. (If `~/.kaggle` directory does not exist, create one first).
 
 ## Download Datasets
 In our experiments, we use these two datasets: 
