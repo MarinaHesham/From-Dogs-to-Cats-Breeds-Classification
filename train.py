@@ -4,32 +4,37 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.models as models
+import argparse
 
 from dataset import ImageFolder, transform_image, load_images
 from utils import train, get_dataloaders, save_model, create_dirs
 
-TRAIN_CLASSES = [
+TRAIN_CLASSES = {"dogs": [
     'n02085620-Chihuahua',
     'n02088364-beagle',
     'n02094258-Norwich_terrier'    
-    ]
+    ], "cats": [
+    'Abyssinian',
+    'Bengal',
+    'Tabby'    
+    ]}
 
-DATASET_DIR = 'dogs/images/Images'
+DATASET_DIR = {"dogs": 'dogs/images/Images', "cats": 'cats/images'}
 
 
-def main():
-    print('Training resnet model for dogs')
+def main(dataset_name):
+    print('Training resnet model for', dataset_name)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # load the dataset
-    print('loading dogs dataset')
-    dataloaders_dict = get_dataloaders(DATASET_DIR, TRAIN_CLASSES)
+    print('loading', dataset_name, 'dataset')
+    dataloaders_dict = get_dataloaders(DATASET_DIR[dataset_name], TRAIN_CLASSES[dataset_name])
     
     # load the resnet18 model
     print('loading the resnet model')
     model = models.resnet18()
     num_feat = model.fc.in_features
-    model.fc = nn.Linear(num_feat, len(TRAIN_CLASSES))
+    model.fc = nn.Linear(num_feat, len(TRAIN_CLASSES[dataset_name]))
 
     loss = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-03)
@@ -45,4 +50,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    # dogs or cats
+    parser.add_argument('--dataset_name', default='dogs')
+    args = parser.parse_args()
+    
+    # fine-tune model
+    main(args.dataset_name)
