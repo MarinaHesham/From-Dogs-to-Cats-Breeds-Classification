@@ -10,7 +10,8 @@ from utils import train, get_dataloaders, save_model, create_dirs
 
 TRAIN_CLASSES = [
     'n02085620-Chihuahua',
-    'n02088364-beagle'    
+    'n02088364-beagle',
+    'n02094258-Norwich_terrier'    
     ]
 
 DATASET_DIR = 'dogs/images/Images'
@@ -24,7 +25,7 @@ def main():
     print('loading dogs dataset')
     dataloaders_dict = get_dataloaders(DATASET_DIR, TRAIN_CLASSES)
     
-    # load the resnet50 model
+    # load the resnet18 model
     print('loading the resnet model')
     model = models.resnet18()
     num_feat = model.fc.in_features

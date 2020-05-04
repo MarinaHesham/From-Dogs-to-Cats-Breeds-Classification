@@ -13,7 +13,8 @@ from train import TRAIN_CLASSES as DOG_CLASSES
 
 TRAIN_CLASSES = [
     'Abyssinian',
-    'Bengal'    
+    'Bengal',
+    'Tabby'    
     ]
 
 DATASET_DIR = 'cats/images'
