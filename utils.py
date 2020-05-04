@@ -79,6 +79,7 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
 
             # check if the validation loss is the best 
             if phase == 'val':
+                # Save the first model
                 if not val_loss:
                     # save model 
                     print("save model")
@@ -86,6 +87,7 @@ def train(model, dataloaders_dict, loss_fn, optimizer, device, no_of_epochs=25):
                 else:
                     min_loss = min(val_loss)
                     if epoch_loss < min_loss:
+                        print("save model")
                         best_model = copy.deepcopy(model.state_dict())
 
                 val_loss.append(epoch_loss)
