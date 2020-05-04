@@ -16,12 +16,13 @@ To download these datasets, execute this command
 python download_datasets.py
 ```
 
-## Training Dogs Model
-Train the dogs model
+## Training a ResNet18 Model
+Train a ResNet18 model on the dogs dataset.
 
 ```
-python train.py
+python train.py --dataset_name dogs
 ```
+We have two dataset options to train: `dogs` and `cats`.
 
 ## Fine-Tuning on Cats Dataset
 Fine-tune the pretrained model on the cats dataset
@@ -29,7 +30,7 @@ Fine-tune the pretrained model on the cats dataset
 ```
 python fine_tune.py --pretrained-model dogs
 ```
-We have two options for pretrained model `dogs` and `imagenet`. 
+We have two options for pretrained model: `dogs` and `imagenet`. 
 
 
 ### Note:
