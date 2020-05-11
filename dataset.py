@@ -56,7 +56,8 @@ def load_images(data_dir, classes):
     for i, _class in enumerate(classes):
         _path = os.path.join(data_dir, _class)
         images = os.listdir(_path)
-        for image in images:
+        for idx, image in enumerate(images):
             all_data.append((os.path.join(_path, image), i))
-    
+            #if idx == 200:
+            #    break    
     return all_data

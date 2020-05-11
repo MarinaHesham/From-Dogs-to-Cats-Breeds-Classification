@@ -12,11 +12,14 @@ from utils import train, get_dataloaders, save_model, create_dirs
 TRAIN_CLASSES = {"dogs": [
     'n02085620-Chihuahua',
     'n02088364-beagle',
-    'n02094258-Norwich_terrier'    
+    'n02094258-Norwich_terrier',
+    'n02092002-Scottish_deerhound'
     ], "cats": [
     'Abyssinian',
     'Bengal',
-    'Tabby'    
+    'Tabby'
+    #'Tonkinese'
+    #'Tortoiseshell'   
     ]}
 
 DATASET_DIR = {"dogs": 'dogs/images/Images', "cats": 'cats/images'}
@@ -34,10 +37,11 @@ def main(dataset_name):
     print('loading the resnet model')
     model = models.resnet18()
     num_feat = model.fc.in_features
+    print(len(TRAIN_CLASSES[dataset_name]))
     model.fc = nn.Linear(num_feat, len(TRAIN_CLASSES[dataset_name]))
 
     loss = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-03)
+    optimizer = optim.Adam(model.parameters(), lr=1e-04)
     print('training the model')
     model, val_loss = train(model, dataloaders_dict, loss, optimizer, device, no_of_epochs=20)
 
